@@ -84,6 +84,18 @@ class MieleRawSensor(Entity):
         return self._device['ident']['deviceIdentLabel']['fabNumber']
 
     @property
+    def device_info(self):
+        return {
+                "identifiers": {
+                    # Serial numbers are unique identifiers within a specific domain
+                    (DOMAIN, self._device['ident']['deviceIdentLabel']['fabNumber'])
+                    },
+                "name": self.name,
+                "manufacturer": "Miele",
+                "model": self._device['ident']['deviceIdentLabel']['techType'],
+                }
+
+    @property
     def unique_id(self):
         """Return the unique ID for this sensor."""
         return self.device_id + '_' + self._key
